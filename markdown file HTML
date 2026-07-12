@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Global Aviation Industry — EDA Report & FY27 Strategic Priorities</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<style>
+  :root{
+    --green:#86BC25;
+    --dark-green:#43B02A;
+    --black:#000000;
+    --charcoal:#262626;
+    --grey:#75787B;
+    --lightgrey:#F2F2F2;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:'Calibri','Segoe UI',Arial,sans-serif; color:var(--charcoal);
+    background:var(--white); line-height:1.55;
+  }
+  header.masthead{
+    background:var(--black); color:var(--white); padding:56px 8vw 40px 8vw;
+  }
+  header.masthead .kicker{
+    color:var(--green); font-weight:700; letter-spacing:2px; font-size:13px; text-transform:uppercase;
+  }
+  header.masthead h1{
+    font-size:40px; margin:14px 0 8px 0; font-weight:700; max-width:900px;
+  }
+  header.masthead p.meta{
+    color:#C9C9C9; font-size:14px; margin-top:18px;
+  }
+  .container{ max-width:1080px; margin:0 auto; padding:0 8vw; }
+  nav.toc{
+    background:var(--lightgrey); padding:22px 28px; margin:-1px 8vw 40px 8vw; border-left:6px solid var(--green);
+  }
+  nav.toc h3{margin:0 0 10px 0; font-size:14px; text-transform:uppercase; letter-spacing:1px; color:var(--charcoal);}
+  nav.toc ol{ margin:0; padding-left:20px; columns:2; font-size:14px;}
+  nav.toc a{ color:var(--charcoal); text-decoration:none; }
+  nav.toc a:hover{ color:var(--dark-green); text-decoration:underline; }
+
+  section{ padding:10px 0 46px 0; }
+  h2.section-title{
+    font-size:26px; color:var(--black); border-bottom:3px solid var(--green); padding-bottom:10px; margin-bottom:22px;
+  }
+  h2.section-title span.num{ color:var(--green); margin-right:10px; }
+  h3{ color:var(--black); font-size:19px; margin-top:30px;}
+  p{ font-size:15.5px; color:#333; }
+  table{ width:100%; border-collapse:collapse; margin:18px 0 28px 0; font-size:14px; }
+  th{ background:var(--black); color:var(--white); text-align:left; padding:10px 12px; font-weight:600;}
+  td{ padding:9px 12px; border-bottom:1px solid #e2e2e2; }
+  tr:nth-child(even) td{ background:#FAFAFA; }
+
+  .insight-card{
+    background:var(--white); border:1px solid #E4E4E4; border-radius:4px; padding:26px 28px; margin-bottom:22px;
+    box-shadow:0 1px 3px rgba(0,0,0,0.04);
+  }
+  .insight-card .badge{
+    display:inline-block; background:var(--green); color:var(--black); font-weight:700; font-size:13px;
+    padding:4px 12px; border-radius:20px; margin-bottom:12px;
+  }
+  .insight-card h4{ margin:6px 0 10px 0; font-size:18px; color:var(--black);}
+  .chart-wrap{ background:var(--white); border:1px solid #E4E4E4; border-radius:4px; padding:18px 20px 8px 20px; margin:18px 0 30px 0;}
+  .chart-wrap .cap{ font-size:12.5px; color:var(--grey); margin-top:6px; }
+  canvas{ max-height:320px; }
+
+  .kpi-row{ display:flex; gap:16px; flex-wrap:wrap; margin:22px 0 30px 0; }
+  .kpi{ flex:1; min-width:180px; background:var(--black); color:var(--white); padding:20px 18px; border-radius:4px; border-top:4px solid var(--green);}
+  .kpi .val{ font-size:28px; font-weight:700; color:var(--green);}
+  .kpi .lbl{ font-size:12.5px; color:#C9C9C9; text-transform:uppercase; letter-spacing:0.5px; margin-top:4px;}
+
+  .projects-list{ counter-reset:proj; list-style:none; padding:0; margin:0; }
+  .projects-list li{
+    counter-increment:proj; position:relative; padding:16px 20px 16px 58px; margin-bottom:12px;
+    background:var(--lightgrey); border-radius:4px; font-size:15px;
+  }
+  .projects-list li::before{
+    content:counter(proj); position:absolute; left:16px; top:50%; transform:translateY(-50%);
+    background:var(--green); color:var(--black); font-weight:700; width:28px; height:28px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-size:14px;
+  }
+  .projects-list b{ color:var(--black); }
+
+  footer{ background:var(--black); color:#C9C9C9; padding:30px 8vw; font-size:12.5px; margin-top:40px;}
+  footer .green{ color:var(--green); font-weight:700; }
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  @media (max-width:800px){ .two-col{grid-template-columns:1fr;} nav.toc ol{columns:1;} }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="kicker">Exploratory Data Analysis &nbsp;|&nbsp; Strategy &amp; Operations</div>
+  <h1>Global Aviation Industry: Performance Review &amp; FY27 Strategic Priorities</h1>
+  <p class="meta">Analysis period 2010–2026 YTD &nbsp;·&nbsp; 5 datasets, 2,199 records &nbsp;·&nbsp; Prepared for Executive Leadership</p>
+</header>
+
+<nav class="toc">
+  <h3>Contents</h3>
+  <ol>
+    <li><a href="#summary">Executive Summary</a></li>
+    <li><a href="#data">Data Overview &amp; Methodology</a></li>
+    <li><a href="#insights">Top 10 Insights</a></li>
+    <li><a href="#projects">Top 10 Strategic Projects</a></li>
+    <li><a href="#appendix">Appendix — Supporting Detail</a></li>
+  </ol>
+</nav>
+
+<div class="container">
+
+<section id="summary">
+  <h2 class="section-title"><span class="num">01</span>Executive Summary</h2>
+  <p>The global aviation industry has completed a full V-shaped recovery from the COVID-19 shock and is now compounding
+  growth from a larger, more concentrated, and more capacity-disciplined base than it had in 2019. Industry revenue
+  reached <b>$660.7B in 2025</b>, <b>27% above the 2019 pre-pandemic peak</b>, while average operating margin has
+  stabilized around <b>8.8%</b>. Beneath this headline recovery, five structural shifts stand out: a widening
+  low-cost/regional margin premium over legacy carriers, a fleet-order backlog now stretching 7–9 years at current
+  delivery rates, Airbus's growing lead over Boeing, the emergence of COMAC as a credible third narrowbody OEM, and a
+  clear reallocation of growth toward Middle East and Africa-linked long-haul hub routes. This report synthesizes
+  those patterns into ten data-backed insights and ten candidate strategic initiatives for the coming year.</p>
+
+  <div class="kpi-row">
+    <div class="kpi"><div class="val">$660.7B</div><div class="lbl">2025 industry revenue (+27% vs 2019)</div></div>
+    <div class="kpi"><div class="val">8.8%</div><div class="lbl">2025 avg. operating margin</div></div>
+    <div class="kpi"><div class="val">1,219M</div><div class="lbl">2025 passengers carried</div></div>
+    <div class="kpi"><div class="val">7–9 yrs</div><div class="lbl">Airbus/Boeing forward order backlog</div></div>
+  </div>
+</section>
+
+<section id="data">
+  <h2 class="section-title"><span class="num">02</span>Data Overview &amp; Methodology</h2>
+  <table>
+    <tr><th>Dataset</th><th>Rows</th><th>Coverage</th><th>Key fields used</th></tr>
+    <tr><td>airline_financials.csv</td><td>497</td><td>2010–2026 (2026 partial), 30 airlines, 5 regions, 3 business models</td><td>revenue, operating margin, load factor, fleet size</td></tr>
+    <tr><td>passenger_traffic.csv</td><td>1,176</td><td>Monthly, 2010–2026 (through Apr-26), 6 regions</td><td>RPK, ASK, load factor</td></tr>
+    <tr><td>fleet_orders.csv</td><td>86</td><td>Annual, 2010–2026, 4 manufacturers</td><td>gross/net orders, deliveries, backlog</td></tr>
+    <tr><td>aviation_incidents.csv</td><td>40</td><td>2010–2026</td><td>severity, fatalities, manufacturer, geopolitical flag</td></tr>
+    <tr><td>route_performance.csv</td><td>400</td><td>2015–2026 (selected years), 40 routes</td><td>passengers, fare, frequency, revenue</td></tr>
+  </table>
+  <p>No missing values were found in any of the five files. All year-over-year and period comparisons exclude
+  <b>2026</b>, which is a partial year (financials show only 30 records, traffic data runs through April, fleet/incident
+  data only a few months deep) — 2026 figures are called out separately as "YTD" where relevant. All dollar figures
+  are nominal USD as provided; no inflation adjustment was applied.</p>
+</section>
+
+<section id="insights">
+  <h2 class="section-title"><span class="num">03</span>Top 10 Insights</h2>
+
+  <div class="insight-card">
+    <span class="badge">Insight 1</span>
+    <h4>The industry didn't just recover from COVID — it re-based to a higher growth trajectory</h4>
+    <p>Revenue fell from $519B (2019) to $204B (2020), a <b>-60.6% collapse</b>, with average operating margin cratering
+    to <b>-35.1%</b>. Revenue didn't regain 2019 levels until 2023 ($585B), and by 2025 stood at <b>$660.7B — 27.3%
+    above 2019</b>. The 2022–2025 revenue CAGR is roughly <b>11.5%</b>, well above the 2010–2019 CAGR of ~5.6%.</p>
+    <div class="chart-wrap"><canvas id="chart1"></canvas><div class="cap">Industry revenue ($B) and average operating margin (%), 2010–2025</div></div>
+  </div>
+
+  <div class="insight-card">
+    <span class="badge">Insight 2</span>
+    <h4>Low-cost and regional carriers hold a durable margin and load-factor premium over legacy</h4>
+    <p>Averaged over 2023–2025: low-cost carriers posted <b>11.7% margin / 87.2% load factor</b>, regional
+    <b>11.0% / 88.3%</b>, versus legacy at just <b>8.0% / 83.0%</b>. Low-cost has out-earned legacy in nearly every
+    year on record, including a smaller relative loss in 2020–2021.</p>
+    <div class="chart-wrap"><canvas id="chart2"></canvas><div class="cap">Operating margin (%) by business model, 2010–2025</div></div>
+  </div>
+
+  <div class="insight-card">
+    <span class="badge">Insight 3</span>
+    <h4>Airlines defended load factor through capacity cuts, recovering utilization years before volume</h4>
+    <p>Europe's load factor collapsed to <b>55.0%</b> for eight straight months in 2020, then rebounded to
+    <b>80–88%</b> throughout 2021 — near 2019 levels — even as RPK volumes stayed roughly half of 2019. Airlines cut
+    capacity faster than demand fell, protecting unit economics.</p>
+    <div class="chart-wrap"><canvas id="chart3"></canvas><div class="cap">Europe monthly load factor (%) vs. RPK (billions), 2019–2022</div></div>
+  </div>
+
+  <div class="insight-card">
+    <span class="badge">Insight 4</span>
+    <h4>The OEM order backlog has become a structural bottleneck, not a demand signal</h4>
+    <p>Airbus backlog grew from 8,728 (2023) to <b>10,305 units (2025)</b>; Boeing from 6,455 to <b>7,276</b>. At
+    current delivery rates, both OEMs are effectively <b>sold out 7–9 years forward</b> — fleet planning, not order
+    placement, is now airlines' real constraint.</p>
+    <div class="chart-wrap"><canvas id="chart4"></canvas><div class="cap">OEM backlog (units), 2023–2025, by manufacturer</div></div>
+  </div>
+
+  <div class="insight-card">
+    <span class="badge">Insight 5</span>
+    <h4>Airbus has pulled decisively ahead of Boeing in net orders and backlog since 2010</h4>
+    <p>Over 2010–2025, Airbus logged <b>18,157 net orders</b> and a <b>108,156-unit backlog</b> vs. Boeing's
+    <b>12,519 net orders</b> and <b>87,265 backlog</b> — roughly a <b>45% net-order advantage</b> for Airbus, widening
+    after 2018-2019.</p>
+    <div class="two-col">
+      <div class="chart-wrap"><canvas id="chart5a"></canvas><div class="cap">Net orders 2010–2025 (cumulative)</div></div>
+      <div class="chart-wrap"><canvas id="chart5b"></canvas><div class="cap">Backlog, end of 2025 (units)</div></div>
+    </div>
+  </div>
+
+  <div class="insight-card">
+    <span class="badge">Insight 6</span>
+    <h4>COMAC's C919 has crossed from prototype to serial production</h4>
+    <p>C919 gross orders jumped from 24 (2018) to a peak of 250 (2023). Deliveries began in 2023 (4 units) and reached
+    <b>25 in 2025</b>, taking the backlog to <b>1,612 units</b> — ahead of Embraer's total accumulated backlog
+    contribution of 3,194 built up over 16 years from a much larger program.</p>
+    <div class="chart-wrap"><canvas id="chart6"></canvas><div class="cap">COMAC C919 backlog (units) and annual deliveries, 2018–2026</div></div>
+  </div>
+
+  <div class="insight-card">
+    <span class="badge">Insight 7</span>
+    <h4>Boeing aircraft are disproportionately represented in the incident record</h4>
+    <p>Of 40 logged incidents, <b>22 (55%) involved Boeing</b> aircraft versus <b>8 (20%) Airbus</b>, including the
+    bulk of fatal crashes. This reflects Boeing's large in-service fleet as well as 737 MAX-era events, and is a
+    reputational and fleet-mix data point already being priced in by regulators and insurers.</p>
+    <div class="chart-wrap" style="max-width:420px;margin-left:auto;margin-right:auto;"><canvas id="chart7"></canvas><div class="cap">Incident count by manufacturer (of 40 total)</div></div>
+  </div>
+
+  <div class="insight-card">
+    <span class="badge">Insight 8</span>
+    <h4>Geopolitical risk is concentrated but severe when it hits</h4>
+    <p>Only 3 of 40 incidents (7.5%) were tagged geopolitical — aircraft shot down over conflict zones, drone attacks
+    on aviation infrastructure — but these carry outsized fatality and route-disruption impact. Combined with strong
+    growth on Gulf-Africa-Europe corridors, airspace-risk planning remains a live, if infrequent, tail risk.</p>
+  </div>
+
+  <div class="insight-card">
+    <span class="badge">Insight 9</span>
+    <h4>Middle East is the fastest-growing region on both traffic and airline-revenue measures</h4>
+    <p>Middle East RPK grew <b>+66.1%</b> from 2019 to 2025 — fastest of any region — while Africa's smaller base grew
+    <b>+58.5%</b>. Qatar Airways revenue grew from $9.95B (2015) to <b>$23.92B (2025), +140%</b>, and new entrant
+    Riyadh Air already shows <b>$1.49B</b> in 2025 revenue.</p>
+    <div class="chart-wrap"><canvas id="chart9"></canvas><div class="cap">RPK growth by region, 2019 → 2025 (%)</div></div>
+  </div>
+
+  <div class="insight-card">
+    <span class="badge">Insight 10</span>
+    <h4>Route economics increasingly favor yield over volume; short-haul intra-region routes have stalled</h4>
+    <p>The top 10 routes by 2025 revenue are dominated by long-haul, high-fare connections (Hong Kong–San Francisco
+    at $543 avg. fare, Amsterdam–Bangkok at $478) rather than the highest-volume routes. Meanwhile London–Paris
+    passengers are <b>down 3.4%</b> since 2019, and São Paulo–Rio <b>down 1.7%</b>, while Gulf-hub long-haul routes
+    grew 15–24% over the same period.</p>
+    <div class="chart-wrap"><canvas id="chart10"></canvas><div class="cap">Passenger growth 2019→2025 (%): fastest-growing vs. stalled routes</div></div>
+  </div>
+
+</section>
+
+<section id="projects">
+  <h2 class="section-title"><span class="num">04</span>Top 10 Strategic Projects for Next Year</h2>
+  <ol class="projects-list">
+    <li><b>High-yield long-haul network expansion</b> — prioritize capacity and codeshare/JV agreements on Gulf-, Africa-, and Asia-Pacific-linked hub routes, the fastest-growing and highest-revenue segments (Insights 9–10).</li>
+    <li><b>Legacy-to-low-cost margin closing program</b> — deploy ancillary revenue, dynamic pricing, and load-factor practices proven by low-cost/regional carriers (Insight 2) across legacy hub operations.</li>
+    <li><b>Fleet delivery-slot &amp; backlog risk office</b> — manage the 7–9 year OEM backlog (Insight 4): secure/resell delivery positions, extend leases, build bridging MRO capacity.</li>
+    <li><b>OEM diversification / COMAC evaluation program</b> — commission a technical and commercial assessment of the C919 as a narrowbody hedge (Insight 6) against Airbus/Boeing lead times.</li>
+    <li><b>Capacity-discipline analytics platform</b> — institutionalize the ASK/RPK matching discipline that protected load factor in 2020–2021 (Insight 3) as a standing network-planning capability.</li>
+    <li><b>Fleet-mix and safety-reputation risk review</b> — given the Boeing-weighted incident record (Insight 7), reassess fleet-type exposure, insurance terms, and customer safety communications.</li>
+    <li><b>Geopolitical route-resilience &amp; airspace risk framework</b> — build standing monitoring and rapid-rerouting capability for conflict-zone airspace (Insight 8).</li>
+    <li><b>Middle East / Africa market entry or partnership review</b> — evaluate equity, codeshare, or JV opportunities with high-growth Gulf carriers (Insight 9), including new entrants like Riyadh Air.</li>
+    <li><b>Short-haul network rationalization</b> — reassess capacity on stalled short-haul routes (Insight 10); redeploy aircraft/slots toward growing long-haul corridors.</li>
+    <li><b>Next-shock financial resilience stress test</b> — using the 2020 margin collapse (-35pp) as the stress scenario, refresh liquidity and capacity-ramp playbooks.</li>
+  </ol>
+</section>
+
+<section id="appendix">
+  <h2 class="section-title"><span class="num">05</span>Appendix — Supporting Detail</h2>
+  <h3>Top 10 airlines by 2025 revenue</h3>
+  <div class="chart-wrap"><canvas id="chartApp1"></canvas><div class="cap">Revenue ($B) and operating margin (%), top 10 airlines, 2025</div></div>
+
+  <h3>Top 10 routes by 2025 revenue</h3>
+  <div class="chart-wrap"><canvas id="chartApp2"></canvas><div class="cap">Annual route revenue ($M), 2025</div></div>
+
+  <p style="margin-top:30px; font-size:13px; color:var(--grey);">
+  Methodology note: all figures are derived directly from the five source CSVs described in Section 2 using pandas
+  aggregation (groupby/pivot on year, region, business model, manufacturer, and route). No external data was introduced.
+  </p>
+</section>
+
+</div>
+
+<footer>
+  <span class="green">Global Aviation Industry EDA</span> &nbsp;|&nbsp; Prepared from airline_financials.csv, passenger_traffic.csv,
+  fleet_orders.csv, aviation_incidents.csv, route_performance.csv &nbsp;|&nbsp; 2010–2026 YTD
+</footer>
+
+<script>
+const D = {"years": [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025], "rev": [317.67, 344.32, 371.91, 393.88, 422.25, 444.51, 472.26, 485.26, 510.35, 519.17, 204.48, 288.55, 476.07, 585.13, 611.96, 660.67], "margin": [6.86, 7.18, 6.92, 7.13, 8.0, 8.06, 7.84, 8.12, 6.92, 7.28, -35.08, -18.2, 2.26, 9.44, 8.6, 8.75], "bm_years": [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025], "legacy": [5.1, 5.6, 5.7, 5.9, 6.3, 6.5, 6.6, 6.6, 5.0, 5.9, -35.3, -18.1, 2.5, 8.4, 7.4, 8.1], "lowcost": [12.1, 12.1, 11.0, 11.0, 12.5, 12.7, 12.0, 11.8, 12.8, 11.1, -34.2, -18.2, 1.6, 12.2, 11.9, 11.0], "regional": [7.9, 5.8, 4.7, 7.2, 11.3, 7.4, 5.3, 14.3, 7.3, 8.8, -36.6, -20.7, 1.8, 13.3, 12.6, 7.1], "eur_labels": ["2019-01", "2019-02", "2019-03", "2019-04", "2019-05", "2019-06", "2019-07", "2019-08", "2019-09", "2019-10", "2019-11", "2019-12", "2020-01", "2020-02", "2020-03", "2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07", "2021-08", "2021-09", "2021-10", "2021-11", "2021-12", "2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06", "2022-07", "2022-08", "2022-09", "2022-10", "2022-11", "2022-12"], "eur_load": [82.5, 80.6, 81.4, 84.8, 80.4, 82.8, 83.8, 83.0, 82.1, 82.4, 83.1, 80.4, 81.9, 86.4, 55.0, 55.0, 55.0, 55.0, 55.0, 55.0, 55.0, 55.0, 55.0, 55.0, 81.3, 81.9, 80.3, 82.4, 82.7, 83.4, 81.0, 84.6, 83.2, 87.6, 80.5, 80.3, 81.4, 82.7, 83.0, 83.2, 86.2, 78.3, 78.5, 81.8, 86.0, 83.5, 80.0, 82.3], "eur_rpk": [113.0, 94.5, 98.1, 94.0, 93.4, 96.7, 94.6, 87.4, 77.0, 66.6, 56.1, 44.4, 35.8, 36.8, 5.8, 6.8, 7.9, 8.3, 59.5, 22.8, 23.6, 22.1, 21.8, 20.1, 58.6, 25.9, 27.8, 28.9, 33.8, 35.8, 85.9, 58.0, 61.2, 60.8, 53.0, 51.9, 75.8, 74.8, 80.7, 88.2, 94.1, 104.4, 107.2, 114.0, 111.8, 111.1, 100.1, 96.5], "fb_years": [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025], "fb_airbus": [3216.0, 3956.0, 4696.0, 5437.0, 6171.0, 6906.0, 7005.0, 7105.0, 7056.0, 6961.0, 6627.0, 6873.0, 7384.0, 8728.0, 9730.0, 10305.0], "fb_boeing": [3136.0, 3774.0, 4413.0, 5053.0, 5420.0, 5787.0, 5937.0, 6087.0, 6229.0, 5706.0, 4557.0, 5052.0, 5507.0, 6455.0, 6876.0, 7276.0], "fb_comac": [null, null, null, null, null, null, null, null, 815.0, 815.0, 815.0, 897.0, 980.0, 1230.0, 1437.0, 1612.0], "fb_embraer": [null, null, null, null, null, null, null, null, 414.0, 364.0, 314.0, 320.0, 327.0, 418.0, 510.0, 527.0], "comac_years": [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026], "comac_backlog": [815, 815, 815, 897, 980, 1230, 1437, 1612, 1690], "comac_deliv": [0, 0, 0, 0, 0, 4, 13, 25, 12], "inc_mfr_labels": ["Boeing", "Airbus", "Other"], "inc_mfr_vals": [22, 8, 10], "reg_labels": ["Middle East", "Africa", "Europe", "Asia Pacific", "North America", "Latin America"], "reg_vals": [66.1, 58.5, 49.8, 45.2, 45.0, 44.3], "route_labels": ["Cairo-Riyadh", "Doha-London", "Tokyo-Singapore", "Hong Kong-San Francisco", "Dubai-London", "Johannesburg-London", "Amsterdam-Bangkok", "Tokyo-Honolulu", "Seoul-Los Angeles", "Bangkok-Singapore"], "route_vals": [1413.9, 1332.2, 1178.1, 1174.3, 1154.1, 1137.3, 1086.4, 1026.0, 1022.4, 1012.0], "wl_labels": ["Doha-London", "Lagos-London", "Johannesburg-London", "Paris-Dubai", "Seoul-Los Angeles", "Tokyo-Honolulu", "London-Paris", "Sao Paulo-Rio", "Bangkok-Singapore", "Singapore-Kuala Lumpur", "Frankfurt-Singapore", "Hong Kong-Taipei"], "wl_vals": [23.8, 23.0, 19.6, 15.7, 15.1, 14.8, -3.4, -1.7, 1.9, 3.1, 3.6, 4.7], "air_labels": ["Delta Air Lines", "United Airlines", "American Airlines", "Lufthansa Group", "Air France-KLM", "IAG (British Airways)", "Emirates", "Southwest Airlines", "China Southern", "Air China"], "air_rev": [64.7, 58.2, 55.9, 43.3, 38.0, 36.2, 33.5, 29.2, 26.3, 25.3], "air_margin": [10.2, 5.5, 10.7, 6.6, 8.2, 7.0, 11.3, 11.6, 9.6, 11.1]};
+Chart.defaults.font.family = "Calibri, 'Segoe UI', Arial, sans-serif";
+Chart.defaults.color = "#444";
+const GREEN = "#86BC25";
+const DGREEN = "#43B02A";
+const BLACK = "#000000";
+const GREY = "#B5B5B5";
+const ACCENT = "#0072CE";
+
+function bar(ctx, labels, datasets, opts={}) {
+  return new Chart(ctx, {type:'bar', data:{labels, datasets}, options:Object.assign({
+    responsive:true, plugins:{legend:{display: datasets.length>1}}, scales:{y:{beginAtZero:true}}
+  }, opts)});
+}
+
+// Chart 1: revenue + margin combo
+new Chart(document.getElementById('chart1'), {
+  data: {
+    labels: D.years,
+    datasets: [
+      {type:'bar', label:'Revenue ($B)', data:D.rev, backgroundColor:GREEN, yAxisID:'y'},
+      {type:'line', label:'Avg Operating Margin (%)', data:D.margin, borderColor:BLACK, backgroundColor:BLACK, yAxisID:'y1', tension:0.25, pointRadius:2}
+    ]
+  },
+  options:{ responsive:true, interaction:{mode:'index',intersect:false},
+    scales:{ y:{type:'linear',position:'left',title:{display:true,text:'$B'}}, y1:{type:'linear',position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'%'}} }
+  }
+});
+
+// Chart 2: business model margin lines
+new Chart(document.getElementById('chart2'), {
+  type:'line',
+  data:{ labels:D.bm_years, datasets:[
+    {label:'Low-cost', data:D.lowcost, borderColor:GREEN, backgroundColor:GREEN, tension:0.2},
+    {label:'Regional', data:D.regional, borderColor:ACCENT, backgroundColor:ACCENT, tension:0.2},
+    {label:'Legacy', data:D.legacy, borderColor:BLACK, backgroundColor:BLACK, tension:0.2},
+  ]},
+  options:{responsive:true, plugins:{legend:{display:true,position:'bottom'}}}
+});
+
+// Chart 3: capacity discipline combo
+new Chart(document.getElementById('chart3'), {
+  data:{ labels:D.eur_labels, datasets:[
+    {type:'bar', label:'RPK (Bn)', data:D.eur_rpk, backgroundColor:'#D9D9D9', yAxisID:'y'},
+    {type:'line', label:'Load Factor (%)', data:D.eur_load, borderColor:GREEN, backgroundColor:GREEN, yAxisID:'y1', tension:0.2, pointRadius:1}
+  ]},
+  options:{ responsive:true, interaction:{mode:'index',intersect:false},
+    scales:{ y:{type:'linear',position:'left',title:{display:true,text:'RPK (Bn)'}}, y1:{type:'linear',position:'right',min:40,max:100,grid:{drawOnChartArea:false},title:{display:true,text:'Load Factor %'}} }
+  }
+});
+
+// Chart 4: backlog stacked
+bar(document.getElementById('chart4'), D.fb_years, [
+  {label:'Airbus', data:D.fb_airbus, backgroundColor:GREEN},
+  {label:'Boeing', data:D.fb_boeing, backgroundColor:BLACK},
+  {label:'COMAC', data:D.fb_comac, backgroundColor:ACCENT},
+  {label:'Embraer', data:D.fb_embraer, backgroundColor:GREY},
+], {plugins:{legend:{display:true,position:'bottom'}}});
+
+// Chart 5a/5b
+bar(document.getElementById('chart5a'), ['Airbus','Boeing'], [{label:'Net Orders 2010-2025', data:[18157,12519], backgroundColor:[GREEN,BLACK]}], {plugins:{legend:{display:false}}});
+bar(document.getElementById('chart5b'), ['Airbus','Boeing','COMAC','Embraer'], [{label:'Backlog end-2025', data:[108156,87265,8601,3194], backgroundColor:[GREEN,BLACK,ACCENT,GREY]}], {plugins:{legend:{display:false}}});
+
+// Chart 6: comac
+new Chart(document.getElementById('chart6'), {
+  data:{ labels:D.comac_years, datasets:[
+    {type:'bar', label:'Backlog (units)', data:D.comac_backlog, backgroundColor:GREEN, yAxisID:'y'},
+    {type:'line', label:'Annual deliveries', data:D.comac_deliv, borderColor:BLACK, backgroundColor:BLACK, yAxisID:'y1', tension:0.2}
+  ]},
+  options:{ responsive:true, scales:{ y:{type:'linear',position:'left',title:{display:true,text:'Backlog'}}, y1:{type:'linear',position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'Deliveries'}} } }
+});
+
+// Chart 7: incidents doughnut
+new Chart(document.getElementById('chart7'), {
+  type:'doughnut',
+  data:{ labels:D.inc_mfr_labels, datasets:[{data:D.inc_mfr_vals, backgroundColor:[BLACK,GREEN,GREY]}] },
+  options:{responsive:true, plugins:{legend:{position:'bottom'}}}
+});
+
+// Chart 9: region growth
+bar(document.getElementById('chart9'), D.reg_labels, [{label:'RPK growth 2019-2025 (%)', data:D.reg_vals, backgroundColor:D.reg_labels.map(l=>l==='Middle East'?GREEN:'#D9D9D9')}], {indexAxis:'y', plugins:{legend:{display:false}}});
+
+// Chart 10: winners vs laggards
+bar(document.getElementById('chart10'), D.wl_labels, [{label:'Passenger growth 2019-2025 (%)', data:D.wl_vals, backgroundColor:D.wl_vals.map(v=>v>=0?GREEN:BLACK)}], {indexAxis:'y', plugins:{legend:{display:false}}});
+
+// Appendix 1: top airlines combo
+new Chart(document.getElementById('chartApp1'), {
+  data:{ labels:D.air_labels, datasets:[
+    {type:'bar', label:'Revenue ($B)', data:D.air_rev, backgroundColor:GREEN, yAxisID:'y'},
+    {type:'line', label:'Operating Margin (%)', data:D.air_margin, borderColor:BLACK, backgroundColor:BLACK, yAxisID:'y1', tension:0.2}
+  ]},
+  options:{ responsive:true, scales:{ x:{ticks:{maxRotation:45,minRotation:45}}, y:{type:'linear',position:'left',title:{display:true,text:'$B'}}, y1:{type:'linear',position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'%'}} } }
+});
+
+// Appendix 2: top routes
+bar(document.getElementById('chartApp2'), D.route_labels, [{label:'Revenue ($M)', data:D.route_vals, backgroundColor:GREEN}], {indexAxis:'y', plugins:{legend:{display:false}}});
+</script>
+</body>
+</html>
